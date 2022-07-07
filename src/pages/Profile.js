@@ -9,7 +9,7 @@ import UserProfile from "../components/profile";
 
 const Profile = () => {
   const { username } = useParams();
-  console.log("username", username);
+  // console.log("username", username);
   const [userExist, setuserExist] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();

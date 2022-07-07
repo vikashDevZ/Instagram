@@ -46,6 +46,7 @@ export async function doesUsernameExist(username) {
 }
 
 export const getUserByUserId = async (userId) => {
+  console.log("userId", userId);
   const userRef = collection(db, "users");
   const result = query(userRef, where("userId", "==", userId));
 
@@ -161,4 +162,50 @@ export const getUserPhotos = async (userId) => {
     docId: item.id,
   }));
   return Photos;
+};
+
+export const isUserFollowingProfile = async (loggedUsername, profileuserId) => {
+  const result = query(
+    collection(db, "users"),
+    where("username", "==", loggedUsername),
+    where("following", "array-contains", profileuserId)
+  );
+
+  const resultData = await getDocs(result);
+
+  const response = resultData.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+
+  console.log("Is user present in following list", response);
+
+  return response.length >= 1;
+};
+
+export const toggleFollow = async (
+  isFollowing,
+  loggedInUserDocId,
+  profileDocId,
+  currentUserProfileId,
+  followingUserId
+) => {
+  console.log(
+    isFollowing,
+    loggedInUserDocId,
+    profileDocId,
+    currentUserProfileId,
+    followingUserId
+  );
+
+  await updateFollowedUserFollowers(
+    profileDocId,
+    loggedInUserDocId,
+    isFollowing
+  );
+  await updateLoggedInUserFollowing(
+    currentUserProfileId,
+    followingUserId,
+    isFollowing
+  );
 };
