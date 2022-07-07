@@ -1,26 +1,33 @@
-import { useState, useContext } from 'react';
-import PropTypes from 'prop-types';
-import UserContext from '../../context/user';
-import { db } from '../../lib/firebase';
-import { arrayUnion, updateDoc } from 'firebase/firestore/lite';
-import { doc } from 'firebase/firestore/lite';
+import { useState, useContext } from "react";
+import PropTypes from "prop-types";
+import UserContext from "../../context/user";
+import { db } from "../../lib/firebase";
+import { arrayUnion, updateDoc } from "firebase/firestore/lite";
+import { doc } from "firebase/firestore/lite";
 
-export default function AddComment({ docId, comments, setComments, commentInput }) {
-  const [comment, setComment] = useState('');
-  const {
-    user: { displayName }
-  } = useContext(UserContext);
+export default function AddComment({
+  docId,
+  comments,
+  setComments,
+  commentInput,
+}) {
+  const [comment, setComment] = useState("");
+  const { user } = useContext(UserContext);
 
-  const handleSubmitComment = async(e) => {
+  if (user) {
+    var displayName = user.displayName;
+  }
+
+  const handleSubmitComment = async (e) => {
     e.preventDefault();
 
     setComments([...comments, { displayName, comment }]);
-    setComment('');
+    setComment("");
 
-    const commentDoc= doc(db,"photos",docId)
-    await updateDoc(commentDoc,{
-      comments:arrayUnion({comment,displayName})
-    })
+    const commentDoc = doc(db, "photos", docId);
+    await updateDoc(commentDoc, {
+      comments: arrayUnion({ comment, displayName }),
+    });
 
     // return firebase
     //   .firestore()
@@ -52,7 +59,9 @@ export default function AddComment({ docId, comments, setComments, commentInput 
           ref={commentInput}
         />
         <button
-          className={`text-sm font-bold text-blue-medium ${!comment && 'opacity-25'}`}
+          className={`text-sm font-bold text-blue-medium ${
+            !comment && "opacity-25"
+          }`}
           type="button"
           disabled={comment.length < 1}
           onClick={handleSubmitComment}
@@ -68,5 +77,5 @@ AddComment.propTypes = {
   docId: PropTypes.string.isRequired,
   comments: PropTypes.array.isRequired,
   setComments: PropTypes.func.isRequired,
-  commentInput: PropTypes.object
+  commentInput: PropTypes.object,
 };

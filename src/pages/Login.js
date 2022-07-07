@@ -4,7 +4,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import FirebaseContext from "../context/firebase";
 import { auth, app } from "../lib/firebase";
-import { DASHBOARD } from "../constants/routes";
+import { DASHBOARD, SIGNUP } from "../constants/routes";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,15 +17,16 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password).then(() => {
-        navigate(DASHBOARD);
-      });
+      await signInWithEmailAndPassword(auth, email, password)
+        .then(() => navigate("/"))
+        .then(() => window.location.reload());
     } catch (error) {
       setEmail("");
       setPassword("");
       setError(error.message);
       console.log(error);
     }
+    navigate("/");
   };
 
   useEffect(() => {
@@ -84,9 +85,9 @@ const Login = () => {
         <div className="flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary">
           <p className="text-sm">
             Don't have an account?{` `}
-            {/* <Link to={ROUTES.SIGN_UP} className="font-bold text-blue-medium">
+            <Link to={SIGNUP} className="font-bold text-blue-medium">
               Sign up
-            </Link> */}
+            </Link>
           </p>
         </div>
       </div>
