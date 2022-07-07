@@ -77,7 +77,8 @@ const SignUp = () => {
             following: [],
             dateCreated: Date.now(),
           })
-            .then(() => navigate(DASHBOARD));
+            .then(() => navigate("/"))
+            .then(() => window.location.reload());
         } catch (error) {
           console.log(err);
           setEmail("");
