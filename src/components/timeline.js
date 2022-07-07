@@ -9,8 +9,11 @@ const timeline = () => {
   console.log("photos", photos);
   return (
     <div className="container col-span-2">
-      {photos &&
-        photos.map((photo) => <Post key={photo.docId} content={photo} />)}
+      {photos && photos.length>1 ? (
+        photos.map((photo) => <Post key={photo.docId} content={photo} />)
+      ) : (
+        <p className="text-center w-80 text-2xl">Follow someone to view their post (raphael)?</p>
+      )}
     </div>
   );
 };

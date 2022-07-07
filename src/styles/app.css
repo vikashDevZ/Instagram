@@ -610,6 +610,9 @@ video {
 .w-16 {
   width: 4rem;
 }
+.w-80 {
+  width: 20rem;
+}
 .max-w-screen-lg {
   max-width: 1024px;
 }
