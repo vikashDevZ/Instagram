@@ -9,6 +9,7 @@
     "axios": "^0.27.2",
     "date-fns": "^2.28.0",
     "firebase": "^9.8.4",
+    "loadtest": "^5.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
@@ -16,14 +17,15 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
+    "serve-build": "^0.1.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "build:css": "postcss src/styles/tailwind.css -o src/styles/app.css",
     "watch:css": "postcss src/styles/tailwind.css -o src/styles/app.css --watch",
     "react-scripts:start": "timeout 5 && react-scripts start",
-    "start": "run-p watch:css react-scripts:start",
-    "build": "run-s build:css react-scripts:build",
+    "start": "run-p watch:css react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
